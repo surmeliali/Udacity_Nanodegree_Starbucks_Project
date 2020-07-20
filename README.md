@@ -44,3 +44,34 @@ amount: (numeric) money spent in "transaction"
 reward: (numeric) money gained from "offer completed"
 time: (numeric) hours after start of test
 
+
+
+
+# How to Run and Requirements for Running
+
+
+You can use either " Python 3 " or "Jupyter Notebook" to see models and results, also graphs.
+Need to run Starbucks_Capstone_Project.ipynb file on your Jupyter notebook or Starbucks_Capstone_Project.py on your IDLE.
+Import libraries below.
+
+Required libraries are:
+
+-pandas
+-numpy
+-math
+-json
+-matplotlib.pyplot
+-sklearn
+    .model_selection  --->  train_test_split
+    .pipeline         --->  Pipeline
+    .preprocessing    --->  StandardScaler
+    .linear_model     --->  LogisticRegression
+    .svm              --->  SVC
+    .neighbors        --->  KNeighborsClassifier
+    .tree             --->  DecisionTreeClassifier
+    .ensemble         --->  RandomForestClassifier, GradientBoostingClassifier
+    .linear_model     --->  LogisticRegression
+    .metrics          --->  fbeta_score, accuracy_score
+    .model_selection  --->  cross_validate
+    .model_selection  --->  GridSearchCV
+
