@@ -76,7 +76,7 @@
 # 
 # Finally, when you enter back into the notebook (use the jupyter icon again), you should be able to run the below cell without any errors.
 
-# In[2]:
+# In[1]:
 
 
 import pandas as pd
@@ -91,7 +91,7 @@ profile = pd.read_json('data/profile.json', orient='records', lines=True)
 transcript = pd.read_json('data/transcript.json', orient='records', lines=True)
 
 
-# In[748]:
+# In[92]:
 
 
 # Added after first cell
@@ -114,19 +114,19 @@ from sklearn.metrics import fbeta_score, accuracy_score
 from sklearn.model_selection import cross_validate
 
 
-# In[424]:
+# In[3]:
 
 
 portfolio
 
 
-# In[44]:
+# In[4]:
 
 
 transcript.tail(10)
 
 
-# In[6]:
+# In[5]:
 
 
 portfolio.shape, profile.shape, transcript.shape
@@ -141,13 +141,13 @@ portfolio.shape, profile.shape, transcript.shape
 # ### Cleaning for portfolio dataset
 # 
 
-# In[20]:
+# In[6]:
 
 
 portfolio.head()
 
 
-# In[ ]:
+# In[7]:
 
 
 # Now we will create new columns for portfolio dataset which shows us channels seperatly
@@ -160,26 +160,26 @@ for channel in channels:
     
 
 
-# In[48]:
+# In[8]:
 
 
 portfolio
 
 
-# In[40]:
+# In[9]:
 
 
 portfolio.drop('channels',axis=1,inplace=True)
 portfolio.head()
 
 
-# In[34]:
+# In[10]:
 
 
 pd.get_dummies(portfolio['offer_type'])
 
 
-# In[45]:
+# In[11]:
 
 
 # Duration period is day for portfolio, while hours for transcript
@@ -189,13 +189,13 @@ pd.get_dummies(portfolio['offer_type'])
 portfolio['duration']*=24
 
 
-# In[50]:
+# In[12]:
 
 
 portfolio.rename(columns={'id': 'offer_id'}, inplace=True)
 
 
-# In[52]:
+# In[13]:
 
 
 portfolio
@@ -209,13 +209,13 @@ portfolio
 
 # ### Cleaning for profile dataset
 
-# In[ ]:
+# In[14]:
 
 
 # I will encode the user id, It isn't necessery anyway..
 
 
-# In[144]:
+# In[15]:
 
 
 
@@ -240,7 +240,7 @@ profile['user_id'] = user_encoded
 profile.head()
 
 
-# In[145]:
+# In[16]:
 
 
 # So we can see that both profile and transaction id's has same amount of users.. 17000
@@ -248,7 +248,7 @@ profile.head()
 profile.id.nunique(),transcript.person.nunique()
 
 
-# In[146]:
+# In[17]:
 
 
 profile.isnull().sum()
@@ -256,7 +256,7 @@ profile.isnull().sum()
 # We need to check out if the values for the same users or not..
 
 
-# In[147]:
+# In[18]:
 
 
 profile[profile['gender'].isnull()]
@@ -264,88 +264,88 @@ profile[profile['gender'].isnull()]
 # It seems they all the same user id, so we can drop them since we dont have any income or gender data..
 
 
-# In[149]:
+# In[19]:
 
 
 profile[profile.age==118]
 
 
-# In[150]:
+# In[20]:
 
 
 profile_new=profile.dropna()
 profile_new.shape
 
 
-# In[151]:
+# In[21]:
 
 
 profile_new.head()
 
 
-# In[154]:
+# In[22]:
 
 
 
 profile_new['became_member_on'] = pd.to_datetime(profile.became_member_on, format='%Y%m%d')
 
 
-# In[155]:
+# In[23]:
 
 
 profile_new.head()
 
 
-# In[ ]:
+# In[24]:
 
 
 # Now we can calculate for how long user is member in starbucks..
 # we can assume maximum date as 2019-01-01 and set the membership since as 'member_since_days'
 
 
-# In[156]:
+# In[25]:
 
 
 profile_new.became_member_on.max()
 
 
-# In[173]:
+# In[26]:
 
 
 max_day=pd.to_datetime('20190101', format='%Y%m%d')
 
 
-# In[179]:
+# In[27]:
 
 
 profile_new['member_since_days']=(max_day-profile_new.became_member_on).dt.days
 
 
-# In[259]:
+# In[28]:
 
 
 profile_new.drop('became_member_on',axis=1, inplace=True)
 
 
-# In[ ]:
+# In[29]:
 
 
 # Change 'id' column with 'customer_id' for merging easily 
 
 
-# In[181]:
+# In[30]:
 
 
 profile_new.rename(columns={"id": "customer_id"},inplace=True)
 
 
-# In[260]:
+# In[31]:
 
 
 profile_new.head()
 
 
-# In[188]:
+# In[32]:
 
 
 # Customer Age hist
@@ -384,7 +384,7 @@ user_income.set_xlabel("Income")
 
 
 
-# In[ ]:
+# In[33]:
 
 
 # At first we will create seperated offer_id and amount columns..
@@ -394,44 +394,44 @@ user_income.set_xlabel("Income")
 # At last, we will rename transcript dataset as transcript_new for easily future calculations
 
 
-# In[199]:
+# In[34]:
 
 
 transcript.head()
 
 
-# In[220]:
+# In[35]:
 
 
 transcript['offer_id'] = transcript.value.apply(lambda x: x[list(x.keys())[0]] if list(x.keys())[0] in ['offer_id','offer id'] else None)
 transcript['amount'] = transcript.value.apply(lambda x: x['amount'] if 'amount' in x.keys() else None)
 
 
-# In[221]:
+# In[36]:
 
 
 transcript=transcript.drop(columns='value')
 
 
-# In[233]:
+# In[37]:
 
 
 transcript.rename(columns={'person': 'customer_id'}, inplace=True)
 
 
-# In[237]:
+# In[38]:
 
 
 transcript.head()
 
 
-# In[239]:
+# In[39]:
 
 
 transcript.isnull().sum()
 
 
-# In[245]:
+# In[40]:
 
 
 # We have 33772 person who we dont have any information about( age gender etc. )
@@ -439,44 +439,44 @@ transcript.isnull().sum()
 len(transcript)-len(transcript[transcript.customer_id.isin(profile_new.customer_id)])
 
 
-# In[246]:
+# In[41]:
 
 
 transcript_new=transcript[transcript.customer_id.isin(profile_new.customer_id)]
 
 
-# In[261]:
+# In[42]:
 
 
 transcript_new.duplicated().sum()
 
 
-# In[262]:
+# In[43]:
 
 
 transcript_new.drop_duplicates(inplace=True)
 
 
-# In[ ]:
+# In[44]:
 
 
 # It will be more understandable if we change the offer_ids more readable way. So let's encode it.
 # And we can rename it like other datasets, portfolio_new..
 
 
-# In[654]:
+# In[45]:
 
 
 portfolio.head()
 
 
-# In[656]:
+# In[46]:
 
 
 portfolio_new=portfolio.copy()
 
 
-# In[665]:
+# In[47]:
 
 
 def offer_mapper():
@@ -501,37 +501,37 @@ for i in range(len(offer_encoded)):
 portfolio_new.head()
 
 
-# In[667]:
+# In[48]:
 
 
 portfolio_new.rename(columns={'offer_id': 'new_offer_id'}, inplace=True)
 
 
-# In[668]:
+# In[49]:
 
 
 portfolio_new['offer_id']=portfolio['offer_id']
 
 
-# In[689]:
+# In[50]:
 
 
 portfolio_new.head()
 
 
-# In[690]:
+# In[51]:
 
 
 profile_new.head()
 
 
-# In[691]:
+# In[52]:
 
 
 transcript_new.head()
 
 
-# In[ ]:
+# In[53]:
 
 
 # Now we have transaction_new, profile_new and portfolio_new datasets..
@@ -540,19 +540,19 @@ transcript_new.head()
 # 
 # # LET'S GET TO WORK
 
-# In[755]:
+# In[54]:
 
 
 # At firts will merge profile&transcript and portfolio&transcript datasets for future usage..
 
 
-# In[692]:
+# In[55]:
 
 
 profile_transcript=profile_new.merge(transcript_new, on='customer_id')
 
 
-# In[693]:
+# In[56]:
 
 
 profile_transcript.head()
@@ -564,25 +564,25 @@ profile_transcript.head()
 
 
 
-# In[694]:
+# In[57]:
 
 
 portfolio_transcript=pd.merge(transcript_new,portfolio_new, on='offer_id',how='left')
 
 
-# In[695]:
+# In[58]:
 
 
 portfolio_transcript.head()
 
 
-# In[696]:
+# In[59]:
 
 
 portfolio_transcript.event.value_counts()
 
 
-# In[697]:
+# In[60]:
 
 
 # We can see that tx didn't happens or user can't see if offer just receives..
@@ -590,13 +590,13 @@ portfolio_transcript.event.value_counts()
 # than create different datasets with all conditions except offer received condition.
 
 
-# In[698]:
+# In[61]:
 
 
 portfolio_transcript=portfolio_transcript[portfolio_transcript['event']!='offer received']
 
 
-# In[699]:
+# In[62]:
 
 
 offer_viewed=portfolio_transcript[portfolio_transcript['event']=='offer viewed']
@@ -604,19 +604,19 @@ offer_completed=portfolio_transcript[portfolio_transcript['event']=='offer compl
 transaction=portfolio_transcript[portfolio_transcript['event']=='transaction']
 
 
-# In[700]:
+# In[63]:
 
 
 offer_viewed.head()
 
 
-# In[701]:
+# In[64]:
 
 
 offer_completed.head()
 
 
-# In[702]:
+# In[65]:
 
 
 transaction.head()
@@ -628,7 +628,7 @@ transaction.head()
 
 
 
-# In[ ]:
+# In[66]:
 
 
 # Than we will calculate the time of customer became a member when the offer sent to person and between time after receiving and tx happens
@@ -637,7 +637,7 @@ transaction.head()
 # After merging, we have no longer need to keep 'offer_id' column which is long and complex data.So we will drop it.
 
 
-# In[686]:
+# In[67]:
 
 
 offers = []
@@ -678,74 +678,74 @@ for index, offer in offers_viewed.iterrows():
 customer_offers = pd.DataFrame(offers)
 
 
-# In[704]:
+# In[68]:
 
 
 customer_offers.head()
 
 
-# In[705]:
+# In[69]:
 
 
 portfolio_new.head()
 
 
-# In[706]:
+# In[70]:
 
 
 # We can change offer_id's to numeric values for simpler looking, we will merge portfolio_new and customer_offers datasets
 
 
-# In[707]:
+# In[71]:
 
 
 customer_offers=customer_offers.merge(portfolio_new[['new_offer_id', 'offer_id']], on='offer_id')
 
 
-# In[709]:
+# In[72]:
 
 
 customer_offers.drop('offer_id',axis=1,inplace=True)
 
 
-# In[710]:
+# In[73]:
 
 
 customer_offers.head()
 
 
-# In[711]:
+# In[74]:
 
 
 profile_new.head()
 
 
-# In[712]:
+# In[75]:
 
 
 customer_profile=customer_offers.merge(profile_new,on='customer_id')
 
 
-# In[714]:
+# In[76]:
 
 
 # We have no longer need to keep customer_id since we have new user id column for this dataset..
 customer_profile.drop(['customer_id','user_id'],axis=1,inplace=True)
 
 
-# In[737]:
+# In[77]:
 
 
 customer_profile.rename(columns={'new_offer_id': 'offer_id'}, inplace=True)
 
 
-# In[738]:
+# In[78]:
 
 
 # OUR DATASET IS READY FOR BUILDING MODEL ON IT. LET'S START BUILDING A MODEL
 
 
-# In[739]:
+# In[79]:
 
 
 customer_profile.head()
@@ -759,7 +759,7 @@ customer_profile.head()
 
 
 
-# In[ ]:
+# In[80]:
 
 
 # We need to split the data to features(X) and target(y) datasets
@@ -773,26 +773,26 @@ customer_profile.head()
 
 
 
-# In[740]:
+# In[81]:
 
 
 X=customer_profile.drop('completed',axis=1)  # Features
 y=customer_profile['completed']              # Target
 
 
-# In[741]:
+# In[82]:
 
 
 X=pd.get_dummies(X)
 
 
-# In[742]:
+# In[83]:
 
 
 X.columns
 
 
-# In[743]:
+# In[84]:
 
 
 X['start_time'] = X['start_time'].astype(float)
@@ -816,7 +816,7 @@ X['gender_M'] = X['gender_M'].astype(float)
 X['gender_O'] = X['gender_O'].astype(float)
 
 
-# In[ ]:
+# In[85]:
 
 
 # Now it is time to split the data to train and test split.
@@ -830,7 +830,7 @@ X['gender_O'] = X['gender_O'].astype(float)
 
 
 
-# In[749]:
+# In[86]:
 
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.3, random_state = 0)
@@ -839,7 +839,7 @@ print("Training set sample size is {} .".format(X_train.shape[0]))
 print("Testing set sample size is {} .".format(X_test.shape[0]))
 
 
-# In[750]:
+# In[87]:
 
 
 clfs = []
@@ -859,30 +859,43 @@ clfs.append(SVC(random_state=0, gamma='scale'))
 for classifier in clfs:
     pipeline.set_params(clf = classifier)
     scores = cross_validate(pipeline, X_train, y_train, cv=5)
-    print('---------------------------------')
+    print('*********')
     print(str(classifier))
-    print('-----------------------------------')
+    print('*********')
     for key, values in scores.items():
             print(key,' => ', values.mean())
 
 
-# In[ ]:
+# In[88]:
 
 
 # Best estimators are RandomForestClassifier and GradientBoostingClassifier with %88 estimation percentage
-# I prefer to choose RandomForestClassifier for my dataset, so let's build a pipeline with 100 estimators.
+# I prefer to choose RandomForestClassifier for my dataset, so let's build a pipeline with estimator we will determine
 
 
-# In[752]:
+# In[95]:
+
+
+from sklearn.model_selection import GridSearchCV
+
+
+# In[150]:
+
+
+parameters = pipeline.get_params()
+parameters
+
+
+# HERE ARE OUR PARAMETERS WE CAN USE FOR IMPROVING OUR MODEL..
+
+
+# In[147]:
 
 
 pipeline = Pipeline([
     ('normalizer', StandardScaler()), 
-    ('rfc', RandomForestClassifier(n_estimators=100, random_state=0))
+    ('rfc', RandomForestClassifier(n_estimators=20, random_state=101,n_jobs=-1,max_features=5,min_sample_split=3))
 ])             
-
-pipeline.fit(X_train, y_train)
-print("Test dataset accuracy score = %3.2f" %(pipeline.score(X_test,y_test)))
 
 
 # In[ ]:
@@ -890,6 +903,65 @@ print("Test dataset accuracy score = %3.2f" %(pipeline.score(X_test,y_test)))
 
 
 
+
+# In[ ]:
+
+
+# We can find best parameters for better score with using GridSearchCV for RandomForestClassifier
+# To do this, after getting parameters of pipeline, we fit the model and get result of best parameters,
+# with help of GridSearchCV() and print it. 
+
+parameters = {
+         'rfc__n_estimators': [ 10,15,20],
+         'rfc__min_samples_split': [3, 4 ],
+         'rfc__max_features': [5],
+         'rfc__random_state': [101],
+         'normalizer__with_mean': [True],
+         'rfc__n_jobs': [-1,1]
+}
+
+
+# In[148]:
+
+
+cv=GridSearchCV(estimator=pipeline,param_grid=parameters)
+conc=cv.fit(X_train,y_train)
+
+
+# In[149]:
+
+
+# As we can see, best parameters relaying below cell. We can use this parameters in our model..
+
+print(conc.best_params_)   
+#best tunned_ score
+print(conc.best_score_)
+
+
+# In[ ]:
+
+
+
+
+
+# In[152]:
+
+
+# But still, our model still has the same accuracy score with %88, but it improved less than %1 rate.
+# it was 0.8760 but now it is 0.8843! That's enough for now..
+# Even if it is seems a small difference, its effects can be determinant. 
+
+pipeline.fit(X_train, y_train)
+print("Test dataset accuracy score = %3.4f" %(pipeline.score(X_test,y_test)))
+
+
+# In[ ]:
+
+
+
+
+
+# Our model has some missing parts like
 
 # ## DATA ANALYSIS
 
