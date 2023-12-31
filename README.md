@@ -3,34 +3,6 @@
 ## Introduction
 This project explores the Starbucks Capstone Challenge, using a simulated dataset to analyze customer behavior on the Starbucks rewards mobile app. The goal is to determine how different demographic groups respond to various types of offers.
 
-## Files Overview
-
-### 1. `portfolio.json`
-- Offer IDs and metadata.
-- **Variables:**
-  - `id` (string) - offer ID
-  - `offer_type` (string) - type of offer (BOGO, discount, informational)
-  - `difficulty` (int) - minimum required spend
-  - `reward` (int) - reward for completing
-  - `duration` (int) - time offer is open
-  - `channels` (list of strings)
-
-### 2. `profile.json`
-- Demographic data for each customer.
-- **Variables:**
-  - `age` (int) - age of the customer
-  - `became_member_on` (int) - date when customer created an app account
-  - `gender` (str) - gender of the customer
-  - `id` (str) - customer ID
-  - `income` (float) - customer's income
-
-### 3. `transcript.json`
-- Records for transactions, offers received, viewed, and completed.
-- **Variables:**
-  - `event` (str) - record description
-  - `person` (str) - customer ID
-  - `time` (int) - time in hours
-  - `value` (dict of strings) - offer ID or transaction amount
 
 ## Problem Statement
 Starbucks aims to optimize offer targeting and customer engagement. The challenge is to determine which demographic groups respond best to specific offer types. Customers not explicitly opting into offers adds complexity.
@@ -69,5 +41,34 @@ Starbucks aims to optimize offer targeting and customer engagement. The challeng
 1. Ensure necessary Python libraries are installed.
 2. Run the Jupyter Notebook (`Starbucks_Capstone_Challenge.ipynb`) in a compatible environment.
 3. Review the analysis, insights, and recommendations.
+
+## Files Overview
+
+### 1. `portfolio.json`
+- Offer IDs and metadata.
+- **Variables:**
+  - `id` (string) - offer ID
+  - `offer_type` (string) - type of offer (BOGO, discount, informational)
+  - `difficulty` (int) - minimum required spend
+  - `reward` (int) - reward for completing
+  - `duration` (int) - time offer is open
+  - `channels` (list of strings)
+
+### 2. `profile.json`
+- Demographic data for each customer.
+- **Variables:**
+  - `age` (int) - age of the customer
+  - `became_member_on` (int) - date when customer created an app account
+  - `gender` (str) - gender of the customer
+  - `id` (str) - customer ID
+  - `income` (float) - customer's income
+
+### 3. `transcript.json`
+- Records for transactions, offers received, viewed, and completed.
+- **Variables:**
+  - `event` (str) - record description
+  - `person` (str) - customer ID
+  - `time` (int) - time in hours
+  - `value` (dict of strings) - offer ID or transaction amount
 
 Feel free to adapt and enhance the project to suit your specific needs.
