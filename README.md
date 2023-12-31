@@ -1,77 +1,73 @@
-# Udacity_Nanodegree_Starbucks_Project
-Starbucks Project | Python | Data Science | Udacity Data Scientist Nanodegree
+# Starbucks Capstone Challenge
 
+## Introduction
+This project explores the Starbucks Capstone Challenge, using a simulated dataset to analyze customer behavior on the Starbucks rewards mobile app. The goal is to determine how different demographic groups respond to various types of offers.
 
-# Dataset Overview
+## Files Overview
 
-The program used to create the data simulates how people make purchasing decisions and how those decisions are influenced by promotional offers.
-Each person in the simulation has some hidden traits that influence their purchasing patterns and are associated with their observable traits. People produce various events, including receiving offers, opening offers, and making purchases.
+### 1. `portfolio.json`
+- Offer IDs and metadata.
+- **Variables:**
+  - `id` (string) - offer ID
+  - `offer_type` (string) - type of offer (BOGO, discount, informational)
+  - `difficulty` (int) - minimum required spend
+  - `reward` (int) - reward for completing
+  - `duration` (int) - time offer is open
+  - `channels` (list of strings)
 
-As a simplification, there are no explicit products to track. Only the amounts of each transaction or offer are recorded.
-There are three types of offers that can be sent: buy-one-get-one (BOGO), discount, and informational. In a BOGO offer, a user needs to spend a certain amount to get a reward equal to that threshold amount. In a discount, a user gains a reward equal to a fraction of the amount spent. In an informational offer, there is no reward, but neither is there a requisite amount that the user is expected to spend. Offers can be delivered via multiple channels.
-The basic task is to use the data to identify which groups of people are most responsive to each type of offer, and how best to present each type of offer.
+### 2. `profile.json`
+- Demographic data for each customer.
+- **Variables:**
+  - `age` (int) - age of the customer
+  - `became_member_on` (int) - date when customer created an app account
+  - `gender` (str) - gender of the customer
+  - `id` (str) - customer ID
+  - `income` (float) - customer's income
 
-You can also check my blogpost about the project with details https://medium.com/@as.alisurmeli/get-in-line-to-take-the-best-offer-from-starbucks-f9b97ec591c8
+### 3. `transcript.json`
+- Records for transactions, offers received, viewed, and completed.
+- **Variables:**
+  - `event` (str) - record description
+  - `person` (str) - customer ID
+  - `time` (int) - time in hours
+  - `value` (dict of strings) - offer ID or transaction amount
 
+## Problem Statement
+Starbucks aims to optimize offer targeting and customer engagement. The challenge is to determine which demographic groups respond best to specific offer types. Customers not explicitly opting into offers adds complexity.
 
-# Data Dictionary
+## Solution Approach
 
-profile.json
-Rewards program users (17000 users x 5 fields)
+### 1. Data Cleaning
+- Addressing issues related to users not opting into offers.
+- Handling demographic variations and user purchases without receiving or viewing offers.
 
-gender: (categorical) M, F, O, or null
-age: (numeric) missing value encoded as 118
-id: (string/hash)
-became_member_on: (date) format YYYYMMDD
-income: (numeric)
-portfolio.json
-Offers sent during 30-day test period (10 offers x 6 fields)
+### 2. Data Analysis
+- Exploratory Data Analysis (EDA) to uncover patterns and correlations.
+- Identifying significant features influencing offer completion.
 
-reward: (numeric) money awarded for the amount spent
-channels: (list) web, email, mobile, social
-difficulty: (numeric) money required to be spent to receive reward
-duration: (numeric) time for offer to be open, in days
-offer_type: (string) bogo, discount, informational
-id: (string/hash)
-transcript.json
-Event log (306648 events x 4 fields)
+### 3. Model Building (Optional)
+- Utilizing machine learning models for predicting user responses.
+- Assessing models such as RandomForest and GradientBoosting.
 
-person: (string/hash)
-event: (string) offer received, offer viewed, transaction, offer completed
-value: (dictionary) different values depending on event type
-offer id: (string/hash) not associated with any "transaction"
-amount: (numeric) money spent in "transaction"
-reward: (numeric) money gained from "offer completed"
-time: (numeric) hours after start of test
+### 4. Results and Recommendations
+- Presenting findings and actionable insights.
+- Recommending strategies for effective offer targeting.
 
+## Project Files
 
+1. **Starbucks_Capstone_Challenge.ipynb:**
+   - Jupyter Notebook with code and explanations.
+   - Structured into sections: Introduction, Data Cleaning, Data Analysis, Model Building, and Results.
 
+2. **data/portfolio.json, data/profile.json, data/transcript.json:**
+   - Raw datasets.
 
-# How to Run and Requirements for Running
+3. **README.md:**
+   - Project summary, file descriptions, problem statement, solution approach, and instructions.
 
+## Instructions
+1. Ensure necessary Python libraries are installed.
+2. Run the Jupyter Notebook (`Starbucks_Capstone_Challenge.ipynb`) in a compatible environment.
+3. Review the analysis, insights, and recommendations.
 
-You can use either " Python 3 " or "Jupyter Notebook" to see models and results, also graphs.
-Need to run Starbucks_Capstone_Project.ipynb file on your Jupyter notebook or Starbucks_Capstone_Project.py on your IDLE.
-Import libraries below.
-
-Required libraries are:
-
--pandas
--numpy
--math
--json
--matplotlib.pyplot
--sklearn
-    .model_selection  --->  train_test_split
-    .pipeline         --->  Pipeline
-    .preprocessing    --->  StandardScaler
-    .linear_model     --->  LogisticRegression
-    .svm              --->  SVC
-    .neighbors        --->  KNeighborsClassifier
-    .tree             --->  DecisionTreeClassifier
-    .ensemble         --->  RandomForestClassifier, GradientBoostingClassifier
-    .linear_model     --->  LogisticRegression
-    .metrics          --->  fbeta_score, accuracy_score
-    .model_selection  --->  cross_validate
-    .model_selection  --->  GridSearchCV
-
+Feel free to adapt and enhance the project to suit your specific needs.
