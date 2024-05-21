@@ -1,51 +1,30 @@
 # Starbucks Capstone Challenge
 
-## Introduction
-This project explores the Starbucks Capstone Challenge, using a simulated dataset to analyze customer behavior on the Starbucks rewards mobile app. The goal is to determine how different demographic groups respond to various types of offers.
+### Table of Contents
+1. [Installation](#installation)
+2. [Project Motivation](#motivation)
+3. [File Overview](#files)
+4. [Solution Steps](#steps)
+5. [Results](#results)
+6. [Licensing, Authors, and Acknowledgements](#licensing)
 
 
-## Problem Statement
-Starbucks aims to optimize offer targeting and customer engagement. The challenge is to determine which demographic groups respond best to specific offer types. Customers not explicitly opting into offers adds complexity.
+## Installation <a name="installation"></a>
+There are no necessary libraries to run the code, the Anaconda environment of Python will be enough. The code should run with no issues using Python versions 3.x. You can run the Jupyter Notebook (`Starbucks_Capstone_Challenge.ipynb`) in a compatible environment.
 
-## Solution Approach
+## Motivation <a name="motivation"></a>
+This project explores the Starbucks Capstone Challenge, using a simulated dataset to analyze customer behavior on the Starbucks rewards mobile app. Starbucks aims to optimize offer targeting and customer engagement. The goal is to determine how different demographic groups respond to various types of offers.
 
-### 1. Data Cleaning
-- Addressing issues related to users not opting into offers.
-- Handling demographic variations and user purchases without receiving or viewing offers.
+We are interested to answer the following two questions:
+1. Which offer should be sent to a particular customer to let the customer buy more?
+2. Which demographic groups respond best to which offer type?
 
-### 2. Data Analysis
-- Exploratory Data Analysis (EDA) to uncover patterns and correlations.
-- Identifying significant features influencing offer completion.
 
-### 3. Model Building (Optional)
-- Utilizing machine learning models for predicting user responses.
-- Assessing models such as RandomForest and GradientBoosting.
-
-### 4. Results and Recommendations
-- Presenting findings and actionable insights.
-- Recommending strategies for effective offer targeting.
-
-## Project Files
-
-1. **Starbucks_Capstone_Challenge.ipynb:**
-   - Jupyter Notebook with code and explanations.
-   - Structured into sections: Introduction, Data Cleaning, Data Analysis, Model Building, and Results.
-
-2. **data/portfolio.json, data/profile.json, data/transcript.json:**
-   - Raw datasets.
-
-3. **README.md:**
-   - Project summary, file descriptions, problem statement, solution approach, and instructions.
-
-## Instructions
-1. Ensure necessary Python libraries are installed.
-2. Run the Jupyter Notebook (`Starbucks_Capstone_Challenge.ipynb`) in a compatible environment.
-3. Review the analysis, insights, and recommendations.
-
-## Files Overview
+## Files Overview <a name="files"></a>
+This data set is a simplified version of the real Starbucks app contains one underlying product among dozens of products Starbucks is selling.
 
 ### 1. `portfolio.json`
-- Offer IDs and metadata.
+- Containing offer ids and meta data about each offer (duration, type, etc.)
 - **Variables:**
   - `id` (string) - offer ID
   - `offer_type` (string) - type of offer (BOGO, discount, informational)
@@ -72,3 +51,41 @@ Starbucks aims to optimize offer targeting and customer engagement. The challeng
   - `value` (dict of strings) - offer ID or transaction amount
 
 Feel free to adapt and enhance the project to suit your specific needs.
+
+
+## Solution Approach <a name="steps"></a>
+
+### 1. Data Cleaning
+- Addressing issues related to users not opting into offers.
+- Handling demographic variations and user purchases without receiving or viewing offers.
+
+### 2. Data Analysis
+- Exploratory Data Analysis (EDA) to uncover patterns and correlations.
+- Identifying significant features influencing offer completion.
+
+### 3. Model Building
+- Utilizing machine learning models for predicting user responses.
+- Assessing models such as RandomForest and GradientBoosting.
+
+### 4. Results and Recommendations
+- Presenting findings and actionable insights.
+- Recommending strategies for effective offer targeting.
+
+
+## Results <a name="results"></a>
+
+
+The main findings of the code can be found at the post available [here](https://surmeliali.medium.com/get-in-line-to-take-the-best-offer-from-starbucks-f9b97ec591c8).
+
+Our analysis leveraged machine learning techniques to predict offer completion and uncover demographic trends in customer responsiveness. Key determinants influencing target selection, including transaction amount, membership duration, starting time, and customer income, were identified through rigorous examination. Notably, transaction amount emerged as the most predictive feature, underscoring its critical role in delineating target demographics.
+
+By employing thorough data preprocessing, training models with RandomForestClassifier, and fine-tuning parameters with GridSearchCV, we achieved an impressive 88.43% accuracy in predicting customer engagement with offers. Furthermore, we identified the demographic segments that show the most favorable responses to specific types of offers.Female respond notably higher response rates compared to men, whether it's for buy-one-get-one (BOGO) deals or discounts. Men tend to respond slightly more positively to discounts rather than BOGO offers. 
+
+
+
+
+
+
+
+## Licancing, Authors, Acknowledgements <a name="licensing"></a>
+Special thanks to Starbucks and Udacity for providing the data utilized in this project!
